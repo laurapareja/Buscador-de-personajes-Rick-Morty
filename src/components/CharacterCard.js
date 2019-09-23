@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const CharacterCard = props => {
@@ -12,6 +13,10 @@ const CharacterCard = props => {
                     <img alt="" src={rol.image}></img>
                     <h2>{rol.name}</h2>
                     <h3>{rol.species}</h3>
+                    <Link
+                        to={`/character-detail/${rol.id}`} className="characterDetailLink">
+                        Ver detalle
+                    </Link>
                 </div>
             )
         })

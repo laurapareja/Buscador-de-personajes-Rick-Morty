@@ -2,8 +2,10 @@ import React from 'react';
 import { fetchInfoSerie } from '../services/fetchInfoSerie';
 import '../stylesheets/App.scss';
 import logo from '../images/logo.png';
-import CharacterList from './CharacterList';
-import Filter from './Filter';
+import Home from './Home'
+import { Switch, Route } from 'react-router-dom'
+import CharacterDetail from './CharacterDetail'
+
 
 class App extends React.Component {
   constructor(props) {
@@ -54,12 +56,27 @@ class App extends React.Component {
     return (
       <div className="app">
         <header><img className="logo" src={logo} alt="Web de Rick & Morty" /></header>
-        <main>
-          <Filter action={this.handleQuery} value={data.query} />
-          <div>
-            <CharacterList query={data.query} data={this.state.characters} />
-          </div>
-        </main>
+
+        <Switch>
+          <Route exact path="/" render={() => {
+            return (
+              <Home
+                action={this.handleQuery}
+                data={this.state.characters}
+                query={data.query}
+              />
+            )
+          }} />
+
+          <Route path="/character-detail/:characterId" render={routerProps => {
+            return (
+              <CharacterDetail
+                routerProps={routerProps}
+                data={this.state.characters}
+              />
+            )
+          }} />
+        </Switch>
       </div>
     );
   }
