@@ -10,9 +10,10 @@ class App extends React.Component {
     const localStorageData = this.getData();
     this.state = localStorageData === null ? this._getInitialState() : localStorageData;
     this.saveData = this.saveData.bind(this);
+    this.handleQuery = this.handleQuery.bind(this);
+
   }
   componentDidMount() {
-    this._getInitialState();
     this.getData();
     this.saveData();
   }
@@ -22,8 +23,17 @@ class App extends React.Component {
       .then(data => {
         this.setState({
           characters: data.results,
+          query: ''
         })
       })
+  }
+  handleQuery(event) {
+    let queryInput = event.currentTarget.value;
+    this.setState({
+      query: queryInput
+    })
+    this.saveData();
+    console.log(localStorage)
   }
 
   getData() {
@@ -38,15 +48,17 @@ class App extends React.Component {
     if (this.state === null) {
       return <p>Loading</p>
     }
-    // const { data } = this.state;
+    const data = this.state;
 
     return (
       <div className="app">
         <header><img className="logo" src={logo} alt="Web de Rick & Morty" /></header>
         <main>
+          <label htmlFor="query"></label>
+          <input type="text" id="query" onChange={this.handleQuery} value={data.query}></input>
           <div>
-            <ul className="listCharacters">
-              <CardCharacter data={this.state.characters} />
+            <ul>
+              <CardCharacter query={data.query} data={this.state.characters} />
             </ul>
           </div>
         </main>

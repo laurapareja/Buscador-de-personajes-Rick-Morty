@@ -12,3 +12,10 @@
     height: 100px;
 }
 
+.listCharacters{
+    display: flex;
+    flex-wrap: wrap;
+}
+.card{
+    margin:10px;
+}
