@@ -1,0 +1,33 @@
+.card{
+    margin:10px;
+    background-color: darkcyan;
+}
+.cardInfoContent{
+    padding:10px 15px 15px 15px;
+}
+.characterName{
+    color: white;
+    padding: 5px 0 5px 0;
+}
+
+.characterSpecies{
+    color: white;
+    padding: 5px 0 5px 0;
+}
+.footerCard{
+    display: flex;
+    justify-content: space-between;
+}
+
+.characterDetailLink{
+    color: rgb(171, 238, 235);
+    text-decoration: none;
+    transition: color ease 0.6s;
+    font-size:16px;
+    padding: 10px;
+    border: 1.5px cadetblue solid;
+  &:hover {
+    color: white;
+    font-size: 18px;
+  }
+}

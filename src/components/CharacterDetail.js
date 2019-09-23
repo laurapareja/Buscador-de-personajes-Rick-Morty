@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../stylesheets/CharacterDetail.scss'
+import PropTypes from 'prop-types'
+
 
 const CharacterDetail = props => {
     const { routerProps, data } = props;
@@ -22,20 +25,26 @@ const CharacterDetail = props => {
 
     return (
         <React.Fragment>
-            <div>
-                <img alt={character} src={character.image} />
-                <h2>{character.name}</h2>
-                <h3>Species: {character.status}</h3>
-                <h3>Origin: {character.origin.name}</h3>
-                <h3>Episodes: {character.episode.length}</h3>
 
+            <div className="cardDetail"> <Link to="/" className="homeLink">Volver al listado</Link>
 
-
-                <Link to="/" className="app__back">Volver al listado</Link>
+                <div>
+                    <img alt={character} src={character.image} className="imgCardDetail" />
+                </div>
+                <div className="infoCardDetailContainter">
+                    <h2 className="characterNameDetail">{character.name}</h2>
+                    <h3 className="characterSpeciesDetail">Species: {character.status}</h3>
+                    <h3 className="characterOriginDetail">Origin: {character.origin.name}</h3>
+                    <h3 className="characterEpisodesDetail">Episodes: {character.episode.length}</h3>
+                </div>
             </div>
         </React.Fragment>
 
     )
+}
+CharacterDetail.propTypes = {
+    routerProps: PropTypes.object.isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
 export default CharacterDetail;

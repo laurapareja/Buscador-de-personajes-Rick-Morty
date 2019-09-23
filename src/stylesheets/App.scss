@@ -2,20 +2,22 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.app {
-    font-size: 20px;
-}
-
-.logo{
-    height: 100px;
-}
-
-.listCharacters{
+.body{
+    background-color:black;
     display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    width:100%;
 }
-.card{
-    margin:10px;
+
+.header{
+    display: flex;
+    justify-content: center;
 }
+
+
+
+
+
