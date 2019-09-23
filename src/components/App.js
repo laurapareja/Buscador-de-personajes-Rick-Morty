@@ -2,7 +2,8 @@ import React from 'react';
 import { fetchInfoSerie } from '../services/fetchInfoSerie';
 import '../stylesheets/App.scss';
 import logo from '../images/logo.png';
-import CardCharacter from './CardCharacter'
+import CharacterList from './CharacterList';
+import Filter from './Filter';
 
 class App extends React.Component {
   constructor(props) {
@@ -54,12 +55,9 @@ class App extends React.Component {
       <div className="app">
         <header><img className="logo" src={logo} alt="Web de Rick & Morty" /></header>
         <main>
-          <label htmlFor="query"></label>
-          <input type="text" id="query" onChange={this.handleQuery} value={data.query}></input>
+          <Filter action={this.handleQuery} value={data.query} />
           <div>
-            <ul>
-              <CardCharacter query={data.query} data={this.state.characters} />
-            </ul>
+            <CharacterList query={data.query} data={this.state.characters} />
           </div>
         </main>
       </div>

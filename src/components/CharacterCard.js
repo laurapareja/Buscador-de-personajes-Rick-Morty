@@ -1,10 +1,8 @@
 import React from 'react';
 
 
-const CardCharacter = props => {
+const CharacterCard = props => {
     const { data, query } = props;
-    console.log(data)
-
     const character = data
 
         .filter(rol => rol.name.toUpperCase().includes(query.toUpperCase()))
@@ -22,4 +20,4 @@ const CardCharacter = props => {
     )
 };
 
-export default CardCharacter;
+export default CharacterCard;
