@@ -1,12 +1,10 @@
 import React from 'react';
-import { fetchInfoSerie } from '../services/fetchInfoSerie';
-import '../stylesheets/App.scss';
-import logo from '../images/logo.png';
-import Home from './Home'
 import { Switch, Route } from 'react-router-dom'
+import { fetchInfoSerie } from '../services/fetchInfoSerie';
+import Home from './Home'
 import CharacterDetail from './CharacterDetail'
-
-
+import logo from '../images/logo.png';
+import '../stylesheets/App.scss';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,14 +17,17 @@ class App extends React.Component {
     this.handleQuery = this.handleQuery.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.handleQueryFavorites = this.handleQueryFavorites.bind(this);
-
+    this.getStatusState = this.getStatusState.bind(this);
+    this.updateQueryStatus = this.updateQueryStatus.bind(this);
 
   }
+
+  //estado inicial antes de pintar
   componentDidMount() {
     this.getData();
     this.saveData();
   }
-
+  //obtengo datos del fetch y actualizo el estado
   _getInitialState() {
     fetchInfoSerie()
       .then(data => {
@@ -34,11 +35,35 @@ class App extends React.Component {
           characters: data.results,
           query: '',
           favorites: [],
-          checkedFavorite: false
+          checkedFavorite: false,
+          status: '',
         })
+        this.getStatusState(this.state)
       })
   }
+  //meto los diferentes status que pueden tener los personajes
+  getStatusState(data) {
+    let statusCharacter = [];
+    const filterStatus = data.characters.map(character => {
+      if (!statusCharacter.includes(character.status)) {
+        statusCharacter.push(character.status)
+      }
+    });
+    this.setState({
+      status: statusCharacter
+    }, this.saveData
+    )
+  }
+  //obtengo los datos del localstorage
+  getData() {
+    return JSON.parse(localStorage.getItem("infoRick"));
+  }
+  //guardo los datos en el localstorage
+  saveData() {
+    localStorage.setItem("infoRick", JSON.stringify(this.state));
+  }
 
+  //actualizo el estado con la búsqueda de nombre que hacemos en el input-text ./Filters
   handleQuery(event) {
     let queryInput = event.currentTarget.value;
     this.setState({
@@ -48,6 +73,7 @@ class App extends React.Component {
     )
   };
 
+  //actualizo el estado favoritos, incluyendo los elementos seleccionados/favoritos en ./CharacterDetail
   handleFavorite(event) {
     let favoriteList = this.state.favorites;
     let favorite = event.currentTarget.value;
@@ -58,16 +84,45 @@ class App extends React.Component {
     } else {
       favoriteList.push(favorite);
     }
-
+    // actualizo el estado
     this.setState({
       favorites: favoriteList
     },
+      //guardo en localstorage
       this.saveData
     )
-    console.log(this.state);
-
   }
 
+  updateQueryStatus(statusSelected) {
+    const info = this.state;
+
+    let queryStatus = [];
+    // console.log(statusSelected)
+    console.log(info)
+
+
+    // if (info.status.includes(statusSelected)) {
+    //   const indexStatusQuery = info.indexOf(item => item === statusSelected);
+    //   queryStatus.splice(indexStatusQuery, 1)
+
+    //   this.setState({
+    //     ...statusQuery: queryStatus
+    //   },
+    //     this.saveData
+    //   )
+    // } else {
+    //   queryStatus.push(statusSelected)
+    //   this.setState({
+    //     statusQuery: queryStatus
+    //   },
+    //     this.saveData
+    //   )
+    // }
+  }
+
+
+
+  // actualizo búsqueda por favoritos cuando el usuario clicka botón/favorito en ./Filters
   handleQueryFavorites(event) {
     if (this.state.checkedFavorite === false) {
       this.setState({
@@ -76,37 +131,33 @@ class App extends React.Component {
         this.saveData
       )
     } else {
+      //actualizo el estado
       this.setState({
         checkedFavorite: false
       },
+        //actualizo el localstorage
         this.saveData
       )
     }
   }
 
-  getData() {
-    return JSON.parse(localStorage.getItem("infoRick"));
-  }
-
-  saveData() {
-    localStorage.setItem("infoRick", JSON.stringify(this.state));
-  }
-
+  //renderizamos!
   render() {
+    //cuando aún no tenemos estado, al abrir la página sin datos en localstorage& y aún está buscando la info en el fetch
     if (this.state === null) {
       return <p>Loading</p>
     }
+    //los datos filtrados que vamos a pintar en el return
     let filteredCharacters;
 
-    console.log(this.state.checkedFavorite)
-
-
+    console.log(this.state)
+    // cuando no hemos clickado al boton favoritos ./Filters devolvemos los elementos filtrados por el buscador input-text
     if (this.state.checkedFavorite === false && this.state.query !== null) {
       filteredCharacters = this.state.characters
         .filter(mycharacter => {
           return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
         });
-    } else {
+    } else { // cuando clickamos boton favoritos ./Filters se hacen ambos filtros
       filteredCharacters = this.state.characters
         .filter(mycharacter => {
           return this.state.favorites.includes(mycharacter.name);
@@ -115,13 +166,6 @@ class App extends React.Component {
           return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
         })
     }
-
-
-    // if (this.handleQueryFavorites) {
-    //   filteredCharacters = this.state.characters.filter(mycharacter => {
-    //     return this.state.favorites.includes(mycharacter.name);
-    //   })
-    // }
 
     return (
       <div className="app">
@@ -136,6 +180,7 @@ class App extends React.Component {
                 info={this.state}
                 favorites={this.state.favorites}
                 actionFavorites={this.handleQueryFavorites}
+                actionStatus={this.updateQueryStatus}
               />
             )
           }} />

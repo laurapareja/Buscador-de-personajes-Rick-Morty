@@ -6,12 +6,12 @@ import Filters from './Filters';
 
 
 const Home = props => {
-    const { action, query, data, favorites, actionFavorites, info } = props;
+    const { action, query, data, favorites, actionFavorites, info, actionStatus } = props;
 
     return (
         <React.Fragment>
-            <Filters action={action} value={query} data={favorites} actionFavorites={actionFavorites} info={info} />
             <main className="main">
+                <Filters action={action} value={query} data={favorites} actionFavorites={actionFavorites} info={info} actionStatus={actionStatus} />
                 <div>
                     <CharacterList data={data} favorites={favorites} />
                 </div>
