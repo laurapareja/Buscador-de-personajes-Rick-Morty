@@ -6,11 +6,9 @@ import PropTypes from 'prop-types'
 
 const Favorites = props => {
     const { actionFavorites, info } = props;
-    console.log(info.checkedFavorite)
     const handleClickFavorite = (event) => {
         actionFavorites(event)
     }
-
     const buttonStatus = info.checkedFavorite === true ? 'buttonclicked' : 'button';
 
     return (
@@ -23,7 +21,7 @@ const Favorites = props => {
 }
 
 Favorites.propTypes = {
-    actionFavorite: PropTypes.func.isRequired,
+    info: PropTypes.object.isRequired,
 };
 
 export default Favorites;

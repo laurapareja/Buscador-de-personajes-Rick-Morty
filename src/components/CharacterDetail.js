@@ -20,18 +20,20 @@ const CharacterDetail = props => {
     const character = data.find(character =>
         character.id === characterId);
 
+    // dependiendo de la especie/estatus/favoritos
+
     const specie = character.species.toLowerCase() === 'human' ? <h3 className="characterDetail">Human <i className="fas fa-child" title='Human'></i></h3> : <h3 className="characterDetail">Alien <i className="fab fa-reddit-alien" title='Alien'></i></h3>;
 
     const status = character.status.toLowerCase() === 'alive' ? <h3 className="characterDetail">Alive <i className="fas fa-heartbeat" title='Alive'></i></h3> : <h3 className="characterDetail">Death <i className="fas fa-skull-crossbones" title='Death'></i></h3>;
 
-    const category = favorites.includes(character.name) ? <h3 className="characterDetailFavorite">Favorite <i className="fas fa-heart heartfavorite" title='Favorite'></i></h3> : '';;
+    const favorite = favorites.includes(character.name) ? <h3 className="characterDetailFavorite">Favorite <i className="fas fa-heart heartfavorite" title='Favorite'></i></h3> : '';
 
-    const handleClick = (event) => {
+    //lifting, cambiamos el estado, añadiendo este personaje a favoritos
+    const handleClickFavorite = (event) => {
         action(event);
     }
     return (
         <React.Fragment>
-
             <div className="cardDetail"> <Link to="/" className="homeLink">Volver al listado</Link>
                 <div>
                     <img alt={character} src={character.image} className="imgCardDetail" />
@@ -42,12 +44,11 @@ const CharacterDetail = props => {
                     <h3 className="characterDetail">Origin: {character.origin.name}</h3>
                     {status}
                     <h3 className="characterDetail">Episodes: {character.episode.length}</h3>
-                    {category}
-                    <button className="favoriteLink" onClick={handleClick} value={character.name}>Favorito</button>
+                    {favorite}
+                    <button className="favoriteLink" onClick={handleClickFavorite} value={character.name}>Favorito</button>
                 </div>
             </div>
         </React.Fragment>
-
     )
 }
 CharacterDetail.propTypes = {
