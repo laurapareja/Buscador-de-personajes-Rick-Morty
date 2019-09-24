@@ -116,13 +116,6 @@ class App extends React.Component {
         })
     }
 
-
-    // if (this.handleQueryFavorites) {
-    //   filteredCharacters = this.state.characters.filter(mycharacter => {
-    //     return this.state.favorites.includes(mycharacter.name);
-    //   })
-    // }
-
     return (
       <div className="app">
         <header className="header"><img className="logo" src={logo} alt="Web de Rick & Morty" /></header>
