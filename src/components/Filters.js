@@ -7,8 +7,11 @@ const Filters = props => {
     const { action, value, data, actionFavorites, info } = props;
     return (
         <div className="searchContainter">
-            <label htmlFor="query"></label>
-            <input type="text" id="query" onChange={action} value={value} className="searchBox"></input>
+            <div>
+                <label htmlFor="query"></label>
+                <input type="text" id="query" onChange={action} value={value} className="searchBox"></input>
+
+            </div>
             <Favorites data={data} actionFavorites={actionFavorites} info={info} />
         </div>
     )
