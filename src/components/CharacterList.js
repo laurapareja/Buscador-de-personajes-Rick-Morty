@@ -18,6 +18,7 @@ const CharacterList = props => {
 
 CharacterList.protoTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default CharacterList;

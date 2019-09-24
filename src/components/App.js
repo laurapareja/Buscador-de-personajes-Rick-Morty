@@ -18,6 +18,7 @@ class App extends React.Component {
     this.saveData = this.saveData.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
+    this.handleQueryFavorites = this.handleQueryFavorites.bind(this);
 
 
   }
@@ -32,7 +33,8 @@ class App extends React.Component {
         this.setState({
           characters: data.results,
           query: '',
-          favorites: []
+          favorites: [],
+          checkedFavorite: false
         })
       })
   }
@@ -66,6 +68,22 @@ class App extends React.Component {
 
   }
 
+  handleQueryFavorites(event) {
+    if (this.state.checkedFavorite === false) {
+      this.setState({
+        checkedFavorite: true
+      },
+        this.saveData
+      )
+    } else {
+      this.setState({
+        checkedFavorite: false
+      },
+        this.saveData
+      )
+    }
+  }
+
   getData() {
     return JSON.parse(localStorage.getItem("infoRick"));
   }
@@ -75,13 +93,35 @@ class App extends React.Component {
   }
 
   render() {
-
     if (this.state === null) {
       return <p>Loading</p>
     }
-    const filteredCharacters = this.state.characters.filter(mycharacter => {
-      return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase());
-    });
+    let filteredCharacters;
+
+    console.log(this.state.checkedFavorite)
+
+
+    if (this.state.checkedFavorite === false && this.state.query !== null) {
+      filteredCharacters = this.state.characters
+        .filter(mycharacter => {
+          return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
+        });
+    } else {
+      filteredCharacters = this.state.characters
+        .filter(mycharacter => {
+          return this.state.favorites.includes(mycharacter.name);
+        })
+        .filter(mycharacter => {
+          return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
+        })
+    }
+
+
+    // if (this.handleQueryFavorites) {
+    //   filteredCharacters = this.state.characters.filter(mycharacter => {
+    //     return this.state.favorites.includes(mycharacter.name);
+    //   })
+    // }
 
     return (
       <div className="app">
@@ -93,7 +133,9 @@ class App extends React.Component {
                 action={this.handleQuery}
                 query={this.state.query}
                 data={filteredCharacters}
+                info={this.state}
                 favorites={this.state.favorites}
+                actionFavorites={this.handleQueryFavorites}
               />
             )
           }} />

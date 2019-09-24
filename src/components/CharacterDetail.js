@@ -17,7 +17,6 @@ const CharacterDetail = props => {
             </div>
         )
     }
-
     const character = data.find(character =>
         character.id === characterId);
 
@@ -53,7 +52,9 @@ const CharacterDetail = props => {
 }
 CharacterDetail.propTypes = {
     routerProps: PropTypes.object.isRequired,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    action: PropTypes.func.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default CharacterDetail;

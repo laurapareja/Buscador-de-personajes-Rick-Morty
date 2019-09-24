@@ -7,7 +7,8 @@ const CharacterCard = props => {
     const { rol, favorites } = props;
 
     const name = rol.name;
-    const category = favorites.includes(name) ? <h3 className="characterDetailFavorite">Favorite <i className="fas fa-heart heartfavorite" title='Favorite'></i></h3> : '';;
+
+    const category = favorites.includes(name) ? <h3 className="characterDetailFavoriteCard">Favorite <i className="fas fa-heart heartfavorite" title='Favorite'></i></h3> : '';;
 
     return (
         <li className='card' key={rol.id}>
@@ -19,7 +20,7 @@ const CharacterCard = props => {
                     <Link
                         to={`/character-detail/${rol.id}`} className="characterDetailLink">
                         Ver detalle
-                              </Link>
+                    </Link>
                 </div>
                 {category}
             </div>
@@ -29,6 +30,8 @@ const CharacterCard = props => {
 
 CharacterCard.propTypes = {
     rol: PropTypes.object.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+
 };
 
 export default CharacterCard;

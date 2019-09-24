@@ -1,31 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import '../stylesheets/Favorites.scss';
+import PropTypes from 'prop-types'
 
 
 
 const Favorites = props => {
-    const { data } = props;
-    const list = data.map((item, index) => {
-        return <li className="favoriteCharacter" key={index}>{item}</li>
-    })
+    const { actionFavorites, info } = props;
+    console.log(info.checkedFavorite)
+    const handleClickFavorite = (event) => {
+        actionFavorites(event)
+    }
+
+    const buttonStatus = info.checkedFavorite === true ? 'buttonclicked' : 'button';
 
     return (
         <div>
-            <button className="favoriteContainer" >
-                Favoritos
-             </button>
-            <div>
-                {list}
-            </div>
-
+            <button onClick={handleClickFavorite} className={buttonStatus}>
+                Ver favoritos
+            </button>
         </div>
-
     )
 }
 
 Favorites.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.string).isRequired,
+    actionFavorite: PropTypes.func.isRequired,
 };
 
 export default Favorites;
