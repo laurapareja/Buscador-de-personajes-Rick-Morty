@@ -15,7 +15,7 @@ const Filter = props => {
 }
 
 Filter.propTypes = {
-    action: PropTypes.object.isRequired,
+    action: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired
 };
 

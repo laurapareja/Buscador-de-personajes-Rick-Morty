@@ -1,5 +1,13 @@
 .logo{
     height: 200px;
     padding:20px;
-
+    padding-top:30px;
+    @media screen and (max-width: 320px) {
+        width: 300px;    
+        padding-top:30px;
+        }
+     @media screen and (max-width: 720px) {
+    height: 130px;    
+    padding-top:30px;
+    }
 }

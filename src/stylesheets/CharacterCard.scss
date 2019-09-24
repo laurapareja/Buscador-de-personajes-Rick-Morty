@@ -1,7 +1,12 @@
 .card{
     margin:10px;
     background-color: darkcyan;
+    width:300px;
+    @media screen and (max-width: 320px) {
+        width:300px;
+      }
 }
+
 .cardInfoContent{
     padding:10px 15px 15px 15px;
 }

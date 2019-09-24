@@ -23,6 +23,12 @@ const CharacterDetail = props => {
         character.id === characterId);
     console.log(character)
 
+
+    const specie = character.species.toLowerCase() === 'human' ? <h3 className="characterDetail">Human <i className="fas fa-child" title='Human'></i></h3> : <h3 className="characterDetail">Alien <i className="fab fa-reddit-alien" title='Alien'></i></h3>;
+
+    const status = character.status.toLowerCase() === 'alive' ? <h3 className="characterDetail">Alive <i className="fas fa-heartbeat" title='Alive'></i></h3> : <h3 className="characterDetail">Death <i className="fas fa-skull-crossbones" title='Death'></i></h3>;
+
+
     return (
         <React.Fragment>
 
@@ -33,9 +39,11 @@ const CharacterDetail = props => {
                 </div>
                 <div className="infoCardDetailContainter">
                     <h2 className="characterNameDetail">{character.name}</h2>
-                    <h3 className="characterSpeciesDetail">Species: {character.status}</h3>
-                    <h3 className="characterOriginDetail">Origin: {character.origin.name}</h3>
-                    <h3 className="characterEpisodesDetail">Episodes: {character.episode.length}</h3>
+                    {specie}
+                    <h3 className="characterDetail">Origin: {character.origin.name}</h3>
+                    {status}
+                    <h3 className="characterDetail">Episodes: {character.episode.length}</h3>
+                    <button className="favoriteLink">Favorito</button>
                 </div>
             </div>
         </React.Fragment>

@@ -20,7 +20,7 @@ const Home = props => {
 Home.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     query: PropTypes.string.isRequired,
-    action: PropTypes.object.isRequired,
+    action: PropTypes.func.isRequired,
 
 };
 
