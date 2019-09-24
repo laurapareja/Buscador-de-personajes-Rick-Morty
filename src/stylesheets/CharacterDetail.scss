@@ -66,7 +66,6 @@
     background-color: white;
     border: 2px rgb(75, 59, 69) solid;
     padding: 6px 10px 6px 10px;
-
   }
 }
 .imgCardDetail{
@@ -74,4 +73,27 @@
     @media screen and (max-width: 400px) {
        padding-top:20px;
       }
+}
+.messageError{
+    color:white;
+}
+
+.homeLinkmessageError{
+    display: flex;
+    text-align: center;
+    color: rgb(171, 238, 235);
+    text-decoration: none;
+    transition: color ease 0.6s;
+    font-size:16px;
+    width:180px;
+    // position: absolute;
+    // right:0;
+    background-color:rgb(49, 45, 45);
+    padding: 15px;
+    border: 1.5px cadetblue solid;
+
+    &:hover {
+    color: white;
+    font-size: 18px;
+  }
 }

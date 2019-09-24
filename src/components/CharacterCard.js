@@ -4,8 +4,11 @@ import '../stylesheets/CharacterCard.scss'
 import PropTypes from 'prop-types';
 
 const CharacterCard = props => {
-    const { rol } = props;
-    console.log(rol)
+    const { rol, favorites } = props;
+
+    const name = rol.name;
+    const category = favorites.includes(name) ? <h3 className="characterDetailFavorite">Favorite <i className="fas fa-heart heartfavorite" title='Favorite'></i></h3> : '';;
+
     return (
         <li className='card' key={rol.id}>
             <img alt="" src={rol.image}></img>
@@ -18,6 +21,7 @@ const CharacterCard = props => {
                         Ver detalle
                               </Link>
                 </div>
+                {category}
             </div>
         </li>
     )

@@ -4,15 +4,15 @@ import '../stylesheets/CharacterList.scss'
 import PropTypes from 'prop-types';
 
 
-const renderList = data => {
+const renderList = (data, favorites) => {
     return data.map((character, index) => {
-        return <CharacterCard rol={character} key={index} />;
+        return <CharacterCard rol={character} key={index} favorites={favorites} />;
     });
 };
 
 const CharacterList = props => {
-    const data = props.data;
-    return <ul className="listCharacters">{renderList(data)}</ul>
+    const { data, favorites } = props;
+    return <ul className="listCharacters">{renderList(data, favorites)}</ul>
 };
 
 

@@ -1,0 +1,24 @@
+.favoriteContainer{
+    height: 30px;
+    width: 100px;
+    background-color: rgb(178, 213, 214);
+    color: black;
+    font-weight: bolder;
+    padding:5px;
+    text-align: center;
+    position: relative;
+    border-radius: 20px;
+    border:1.5px solid darkcyan;
+    &:active {
+        background-color: white;
+        border: 2px rgb(75, 59, 69) solid;
+      }
+}
+.hidden{
+    display:none;
+}
+
+.favoriteCharacter{
+    color:white;
+    list-style:none;
+}

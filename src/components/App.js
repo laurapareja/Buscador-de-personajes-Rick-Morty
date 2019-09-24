@@ -17,6 +17,8 @@ class App extends React.Component {
 
     this.saveData = this.saveData.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
+
 
   }
   componentDidMount() {
@@ -29,10 +31,12 @@ class App extends React.Component {
       .then(data => {
         this.setState({
           characters: data.results,
-          query: ''
+          query: '',
+          favorites: []
         })
       })
   }
+
   handleQuery(event) {
     let queryInput = event.currentTarget.value;
     this.setState({
@@ -41,6 +45,26 @@ class App extends React.Component {
       this.saveData
     )
   };
+
+  handleFavorite(event) {
+    let favoriteList = this.state.favorites;
+    let favorite = event.currentTarget.value;
+
+    if (favoriteList.includes(favorite)) {
+      const indexFavorite = favoriteList.indexOf(nameCharacter => nameCharacter === favorite);
+      favoriteList.splice(indexFavorite, 1);
+    } else {
+      favoriteList.push(favorite);
+    }
+
+    this.setState({
+      favorites: favoriteList
+    },
+      this.saveData
+    )
+    console.log(this.state);
+
+  }
 
   getData() {
     return JSON.parse(localStorage.getItem("infoRick"));
@@ -69,6 +93,7 @@ class App extends React.Component {
                 action={this.handleQuery}
                 query={this.state.query}
                 data={filteredCharacters}
+                favorites={this.state.favorites}
               />
             )
           }} />
@@ -78,6 +103,8 @@ class App extends React.Component {
               <CharacterDetail
                 routerProps={routerProps}
                 data={this.state.characters}
+                action={this.handleFavorite}
+                favorites={this.state.favorites}
               />
             )
           }} />

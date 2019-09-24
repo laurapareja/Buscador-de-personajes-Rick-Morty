@@ -2,19 +2,21 @@ import React from 'react'
 import CharacterList from './CharacterList';
 import '../stylesheets/Home.scss'
 import PropTypes from 'prop-types';
-import Filter from './Filter';
+import SearchContainer from './SearchContainer';
 
 
 const Home = props => {
-    const { action, query, data } = props;
+    const { action, query, data, favorites } = props;
 
     return (
-        <main>
-            <Filter action={action} value={query} />
-            <div>
-                <CharacterList data={data} />
-            </div>
-        </main>
+        <React.Fragment>
+            <SearchContainer action={action} value={query} data={favorites} />
+            <main className="main">
+                <div>
+                    <CharacterList data={data} favorites={favorites} />
+                </div>
+            </main>
+        </React.Fragment>
     )
 }
 Home.propTypes = {
