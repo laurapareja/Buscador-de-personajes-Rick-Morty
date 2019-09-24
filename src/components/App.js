@@ -17,9 +17,6 @@ class App extends React.Component {
     this.handleQuery = this.handleQuery.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.handleQueryFavorites = this.handleQueryFavorites.bind(this);
-    this.getStatusState = this.getStatusState.bind(this);
-    this.updateQueryStatus = this.updateQueryStatus.bind(this);
-
   }
 
   //estado inicial antes de pintar
@@ -36,24 +33,10 @@ class App extends React.Component {
           query: '',
           favorites: [],
           checkedFavorite: false,
-          status: '',
         })
-        this.getStatusState(this.state)
       })
   }
-  //meto los diferentes status que pueden tener los personajes
-  getStatusState(data) {
-    let statusCharacter = [];
-    const filterStatus = data.characters.map(character => {
-      if (!statusCharacter.includes(character.status)) {
-        statusCharacter.push(character.status)
-      }
-    });
-    this.setState({
-      status: statusCharacter
-    }, this.saveData
-    )
-  }
+
   //obtengo los datos del localstorage
   getData() {
     return JSON.parse(localStorage.getItem("infoRick"));
@@ -93,35 +76,6 @@ class App extends React.Component {
     )
   }
 
-  updateQueryStatus(statusSelected) {
-    const info = this.state;
-
-    let queryStatus = [];
-    // console.log(statusSelected)
-    console.log(info)
-
-
-    // if (info.status.includes(statusSelected)) {
-    //   const indexStatusQuery = info.indexOf(item => item === statusSelected);
-    //   queryStatus.splice(indexStatusQuery, 1)
-
-    //   this.setState({
-    //     ...statusQuery: queryStatus
-    //   },
-    //     this.saveData
-    //   )
-    // } else {
-    //   queryStatus.push(statusSelected)
-    //   this.setState({
-    //     statusQuery: queryStatus
-    //   },
-    //     this.saveData
-    //   )
-    // }
-  }
-
-
-
   // actualizo búsqueda por favoritos cuando el usuario clicka botón/favorito en ./Filters
   handleQueryFavorites(event) {
     if (this.state.checkedFavorite === false) {
@@ -150,7 +104,6 @@ class App extends React.Component {
     //los datos filtrados que vamos a pintar en el return
     let filteredCharacters;
 
-    console.log(this.state)
     // cuando no hemos clickado al boton favoritos ./Filters devolvemos los elementos filtrados por el buscador input-text
     if (this.state.checkedFavorite === false && this.state.query !== null) {
       filteredCharacters = this.state.characters
