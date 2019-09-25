@@ -89,6 +89,18 @@ class App extends React.Component {
 
     } else {
       statusQueryArray.push(statusSelected);
+
+      if (this.state.checkedStatus === false) {
+        this.setState({
+          checkedStatus: true
+        }, this.saveData
+        )
+      } else {
+        this.setState({
+          checkedStatus: false
+        }, this.saveData
+        )
+      }
     }
     // actualizo el estado
     this.setState({
@@ -97,16 +109,6 @@ class App extends React.Component {
       //guardo en localstorage
       this.saveData
     )
-
-    if (this.state.checkedStatus === false) {
-      this.setState({
-        checkedStatus: true
-      })
-    } else {
-      this.setState({
-        checkedStatus: false
-      })
-    }
   }
 
   // actualizo búsqueda por favoritos cuando el usuario clicka botón/favorito en ./Filters
@@ -136,14 +138,6 @@ class App extends React.Component {
     }
     let filteredCharacters;
 
-
-
-    // if (this.state.statusquery === true) {
-    //   filteredCharacters = this.state.characters
-    //     .filter(mycharacter => {
-    //       return this.state.statusquery.includes(mycharacter.status);
-    //     })
-    // }
     if (this.state.query !== null && this.state.checkedFavorite === false) {
       filteredCharacters = this.state.characters
         .filter(mycharacter => {
