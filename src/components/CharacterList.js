@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 
 
 const renderList = (data, favorites) => {
-    return data.map((character, index) => {
-        return <CharacterCard rol={character} key={index} favorites={favorites} />;
+    console.log(data)
+    return data.map((character, index, status) => {
+        return <CharacterCard rol={character} key={index} favorites={favorites} status={status} />;
     });
 };
 

@@ -17,8 +17,7 @@ class App extends React.Component {
     this.handleQuery = this.handleQuery.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
     this.handleQueryFavorites = this.handleQueryFavorites.bind(this);
-    this.getStatusState = this.getStatusState.bind(this);
-    this.updateQueryStatus = this.updateQueryStatus.bind(this);
+    this.handleQueryStatus = this.handleQueryStatus.bind(this);
 
   }
 
@@ -36,24 +35,12 @@ class App extends React.Component {
           query: '',
           favorites: [],
           checkedFavorite: false,
-          status: '',
+          statusquery: [],
+          checkedStatus: false,
         })
-        this.getStatusState(this.state)
       })
   }
-  //meto los diferentes status que pueden tener los personajes
-  getStatusState(data) {
-    let statusCharacter = [];
-    const filterStatus = data.characters.map(character => {
-      if (!statusCharacter.includes(character.status)) {
-        statusCharacter.push(character.status)
-      }
-    });
-    this.setState({
-      status: statusCharacter
-    }, this.saveData
-    )
-  }
+
   //obtengo los datos del localstorage
   getData() {
     return JSON.parse(localStorage.getItem("infoRick"));
@@ -93,34 +80,34 @@ class App extends React.Component {
     )
   }
 
-  updateQueryStatus(statusSelected) {
-    const info = this.state;
+  handleQueryStatus(statusSelected) {
+    let statusQueryArray = this.state.statusquery;
 
-    let queryStatus = [];
-    // console.log(statusSelected)
-    console.log(info)
+    if (statusQueryArray.includes(statusSelected)) {
+      const indexStatus = statusQueryArray.indexOf(statusCharacter => statusCharacter === statusSelected);
+      statusQueryArray.splice(indexStatus, 1);
 
+    } else {
+      statusQueryArray.push(statusSelected);
+    }
+    // actualizo el estado
+    this.setState({
+      statusquery: statusQueryArray
+    },
+      //guardo en localstorage
+      this.saveData
+    )
 
-    // if (info.status.includes(statusSelected)) {
-    //   const indexStatusQuery = info.indexOf(item => item === statusSelected);
-    //   queryStatus.splice(indexStatusQuery, 1)
-
-    //   this.setState({
-    //     ...statusQuery: queryStatus
-    //   },
-    //     this.saveData
-    //   )
-    // } else {
-    //   queryStatus.push(statusSelected)
-    //   this.setState({
-    //     statusQuery: queryStatus
-    //   },
-    //     this.saveData
-    //   )
-    // }
+    if (this.state.checkedStatus === false) {
+      this.setState({
+        checkedStatus: true
+      })
+    } else {
+      this.setState({
+        checkedStatus: false
+      })
+    }
   }
-
-
 
   // actualizo búsqueda por favoritos cuando el usuario clicka botón/favorito en ./Filters
   handleQueryFavorites(event) {
@@ -143,29 +130,48 @@ class App extends React.Component {
 
   //renderizamos!
   render() {
-    //cuando aún no tenemos estado, al abrir la página sin datos en localstorage& y aún está buscando la info en el fetch
+
     if (this.state === null) {
       return <p>Loading</p>
     }
-    //los datos filtrados que vamos a pintar en el return
     let filteredCharacters;
 
-    console.log(this.state)
-    // cuando no hemos clickado al boton favoritos ./Filters devolvemos los elementos filtrados por el buscador input-text
-    if (this.state.checkedFavorite === false && this.state.query !== null) {
+
+
+    // if (this.state.statusquery === true) {
+    //   filteredCharacters = this.state.characters
+    //     .filter(mycharacter => {
+    //       return this.state.statusquery.includes(mycharacter.status);
+    //     })
+    // }
+    if (this.state.query !== null && this.state.checkedFavorite === false) {
       filteredCharacters = this.state.characters
         .filter(mycharacter => {
           return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
-        });
-    } else { // cuando clickamos boton favoritos ./Filters se hacen ambos filtros
+        })
+        ;
+    }
+    if (this.state.checkedStatus === true) {
       filteredCharacters = this.state.characters
+        .filter(mycharacter => {
+          return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
+        })
+        .filter(mycharacter => {
+          return this.state.statusquery.includes(mycharacter.status);
+        })
+    }
+
+    if (this.state.query !== null && this.state.checkedFavorite === true) {
+      filteredCharacters = this.state.characters
+        .filter(mycharacter => {
+          return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
+        })
         .filter(mycharacter => {
           return this.state.favorites.includes(mycharacter.name);
         })
-        .filter(mycharacter => {
-          return mycharacter.name.toUpperCase().includes(this.state.query.toUpperCase())
-        })
     }
+
+    // da errores si seleccionas más de un status
 
     return (
       <div className="app">
@@ -180,7 +186,7 @@ class App extends React.Component {
                 info={this.state}
                 favorites={this.state.favorites}
                 actionFavorites={this.handleQueryFavorites}
-                actionStatus={this.updateQueryStatus}
+                actionStatus={this.handleQueryStatus}
               />
             )
           }} />
